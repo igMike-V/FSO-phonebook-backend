@@ -50,6 +50,7 @@ app.get('/api/persons', (req, res) => {
 
 // Get a single person
 app.get('/api/persons/:id', (req, res) => {
+    // Id from params is a string.  convert to number
     const id = Number(req.params.id)
     const person = persons.find(item => item.id === id)
     
@@ -63,6 +64,20 @@ app.get('/api/persons/:id', (req, res) => {
     }
     
 })
+
+// Delete an entry
+app.delete('/api/persons/:id', (req, res) => {
+    // Id from params is a string.  convert to number
+    const id = Number(req.params.id)
+    if(persons.find(item => item.id === id)){
+        persons = persons.filter(person => person.id !== id)
+        res.status(200).end()
+    } else {
+        res.status(404).end()
+    }
+})
+
+
 
 const PORT = 3001
 app.listen(PORT, () => {
