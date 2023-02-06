@@ -2,11 +2,19 @@ const express = require('express')
 const morgan = require('morgan')
 const app = express()
 
+// MORGAN - Create a new token for the request data body
+morgan.token('req-data', req => {
+    // If method is post then return the body
+    if(req.method === 'POST'){
+        return JSON.stringify(req.body)
+    }    
+    // Note Post
+    return
+})
+
+// Set express to use Json and morgan middleware
 app.use(express.json())
-app.use(morgan('tiny'))
-
-// Morgan Middleware logging to console
-
+app.use(morgan(':method :url :status :response-time :req-data'))
 
 
 // Hardcoded Data
@@ -121,9 +129,6 @@ app.post('/api/persons', (req, res) => {
     res.json(newEntry)
 
 })
-
-
-
 
 const PORT = 3001
 app.listen(PORT, () => {
