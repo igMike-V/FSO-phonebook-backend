@@ -91,6 +91,21 @@ const getRandomId = () => {
 app.post('/api/persons', (req, res) => {
     const body = req.body
     let newId = getRandomId()
+    
+    // Error handling for name
+    if(!body.name){
+        return res.status(400).json({
+            error: 'Request must contain a name'
+        })
+    }
+
+    // Error handling for number
+    if(!body.number){
+        return res.status(400).json({
+            error: 'Request must contain a number'
+        })
+    }
+
     const newEntry = { 
         "id": newId,
         "name": body.name, 

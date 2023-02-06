@@ -3,11 +3,27 @@ GET http://localhost:3001/api/persons
 ###
 DELETE http://localhost:3001/api/persons/2
 
-###
+### working send
 POST http://localhost:3001/api/persons
 Content-Type: application/json
 
 { 
     "name": "Mike Vautour", 
     "number": "905-333-3333"
+}
+
+### Send missing name
+POST http://localhost:3001/api/persons
+Content-Type: application/json
+
+{ 
+    "number": "905-333-3333"
+}
+
+### Send missing number
+POST http://localhost:3001/api/persons
+Content-Type: application/json
+
+{ 
+    "name": "Mike Vautour" 
 }
