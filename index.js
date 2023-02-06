@@ -77,6 +77,10 @@ app.delete('/api/persons/:id', (req, res) => {
     }
 })
 
+// Add a new entry
+app.post('/api/persons', (req, res) => {
+    res.json(persons)
+})
 
 
 const PORT = 3001
