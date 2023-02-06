@@ -33,6 +33,7 @@ app.get('/', (req, res) => {
     res.send('<h1>Phonebook Api</h1><p>Use /api/persons to return the listings.</p>')
 })
 
+// Return info on the api
 app.get('/info', (req, res) => {
     const date = new Date()
     const pageContent = `
@@ -42,10 +43,26 @@ app.get('/info', (req, res) => {
     res.send(pageContent)
 })
 
+// Get all people
 app.get('/api/persons', (req, res) => {
     res.json(persons)
 })
 
+// Get a single person
+app.get('/api/persons/:id', (req, res) => {
+    const id = Number(req.params.id)
+    const person = persons.find(item => item.id === id)
+    
+    // Check if person contains something
+    if(person){
+        // Respond with person
+        res.json(person)
+    } else {
+        // Set status as not found and end
+        res.status(404).end()
+    }
+    
+})
 
 const PORT = 3001
 app.listen(PORT, () => {
