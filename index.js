@@ -77,10 +77,31 @@ app.delete('/api/persons/:id', (req, res) => {
     }
 })
 
+// Get a unique id for the post
+const getRandomId = () => {
+    let id = 0
+    // Set id to a random number, continue getting new random numbers until a unique value is found
+    do {
+        id = Math.floor(Math.random() * 99999999999)
+    } while (persons.find(person => person.id === id))
+    return id
+}
+
 // Add a new entry
 app.post('/api/persons', (req, res) => {
-    res.json(persons)
+    const body = req.body
+    let newId = getRandomId()
+    const newEntry = { 
+        "id": newId,
+        "name": body.name, 
+        "number": body.number
+      }
+    persons.push(newEntry)
+    res.json(newEntry)
+
 })
+
+
 
 
 const PORT = 3001
