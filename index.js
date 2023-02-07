@@ -16,6 +16,7 @@ morgan.token('req-data', req => {
 })
 
 // Set express to use Json and morgan middleware
+app.use(express.static('build'))
 app.use(express.json())
 app.use(morgan(':method :url :status :response-time :req-data'))
 
