@@ -5,6 +5,7 @@ const morgan = require('morgan')
 const app = express()
 const Person = require('./models/person')
 const { response } = require('express')
+const person = require('./models/person')
 
 app.use(cors())
 
@@ -50,23 +51,20 @@ app.get('/api/persons', (req, res) => {
 })
 
 // Get a single person
-app.get('/api/persons/:id', (req, res) => {
-    // Id from params is a string.  convert to number
+app.get('/api/persons/:id', (req, res, next) => {
     Person.findById(req.params.id).then(person => {
         res.json(person)
     })
+    .catch(error => next(error))
 })
 
 // Delete an entry
-app.delete('/api/persons/:id', (req, res) => {
+app.delete('/api/persons/:id', (req, res, next) => {
     Person.findByIdAndRemove(req.params.id)
         .then(delResult => {
             res.status(204).end()
         })
-        .catch(error => {
-            console.log(error)
-            res.status(400).send({error : error})
-        })
+        .catch(error => next(error))
 })
 
 // Add a new entry
@@ -95,6 +93,36 @@ app.post('/api/persons', (req, res) => {
     })
 
 })
+
+// TODO
+app.put('/api/persons/:id', (req, res, next) => {
+    const body = req.body
+    const personUpdate = {
+        number: body.number,
+    }
+    Person.findByIdAndUpdate(req.params.id, personUpdate, {new : true})
+    .then(returnedUpdate => {
+        res.json(returnedUpdate)
+    })
+    .catch(error => next(error))
+
+})
+
+
+// for unknown endpoints:
+const unknownEndpoint = (req, res) => {
+    res.status(404).send({error: 'Unknown Endpoint'})
+}
+app.use(unknownEndpoint)
+
+const errorHandler = (error, req, res, next) => {
+    console.error(error.message)
+    if (error.name === 'CastError') {
+        return res.status(400).send({ error: 'malformatted id'})
+    }
+    next(error)
+}
+app.use(errorHandler)
 
 const PORT = process.env.PORT || 3001
 app.listen(PORT, () => {
