@@ -1,7 +1,10 @@
-GET http://localhost:3001/api/persons
+GET http://localhost:3001/api/persons/
 
-###
-DELETE http://localhost:3001/api/persons/2
+### get a single person
+GET http://localhost:3001/api/persons/63e3f91aea2af11151ec6300
+
+### delete (provide existing id)
+DELETE http://localhost:3001/api/persons/63e3f91aea2af11151ec6300
 
 ### working send
 POST http://localhost:3001/api/persons
