@@ -4,7 +4,7 @@ GET http://localhost:3001/api/persons/
 GET http://localhost:3001/api/persons/63e3f91aea2af11151ec6300
 
 ### delete (provide existing id)
-DELETE http://localhost:3001/api/persons/63e3fbd20b293e67d34c807c
+DELETE http://localhost:3001/api/persons/63e3fbd20b293e67d34c
 
 ### working send
 POST http://localhost:3001/api/persons
