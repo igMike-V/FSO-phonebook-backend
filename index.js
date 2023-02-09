@@ -24,7 +24,6 @@ app.use(express.static('build'))
 app.use(express.json())
 app.use(morgan(':method :url :status :response-time :req-data'))
 
-
 //Routes
 app.get('/', (req, res) => {
     res.send('<h1>Phonebook Api</h1><p>Use /api/persons to return the listings.</p>')
