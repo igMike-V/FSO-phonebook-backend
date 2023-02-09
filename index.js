@@ -57,16 +57,16 @@ app.get('/api/persons/:id', (req, res) => {
     })
 })
 
-// TODO Delete an entry
+// Delete an entry
 app.delete('/api/persons/:id', (req, res) => {
-    // Id from params is a string.  convert to number
-    const id = Number(req.params.id)
-    if(persons.find(item => item.id === id)){
-        persons = persons.filter(person => person.id !== id)
-        res.status(200).end()
-    } else {
-        res.status(404).end()
-    }
+    Person.findByIdAndRemove(req.params.id)
+        .then(delResult => {
+            res.status(204).end()
+        })
+        .catch(error => {
+            console.log(error)
+            res.status(400).send({error : error})
+        })
 })
 
 // Add a new entry
