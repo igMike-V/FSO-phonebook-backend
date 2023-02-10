@@ -15,9 +15,16 @@ const personSchema = new mongoose.Schema({
     name: {
         type: String,
         minLength: 3,
-        required: true
+        required: true,
+        unique: true
     },
-    number: String,
+    number: {
+        type: String,
+        validate: {
+            validator: value => /^\d{2,3}\-\d{6,}/.test(value)
+        },
+        required: true
+    }
 })
 
 

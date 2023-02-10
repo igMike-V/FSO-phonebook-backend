@@ -84,11 +84,11 @@ app.post('/api/persons', (req, res, next) => {
 
 // Update an entry
 app.put('/api/persons/:id', (req, res, next) => {
-    const { number } = req.body
+    const { number, name } = req.body
 
     Person.findByIdAndUpdate(req.params.id,
-        { number },
-        {new : true, reValidators: true, context: 'query' }
+        { number, name },
+        {new : true, runValidators: true, context: 'query' }
     )
         .then(returnedUpdate => {
         res.json(returnedUpdate)
@@ -109,6 +109,8 @@ const errorHandler = (error, req, res, next) => {
         return res.status(400).send({ error: 'malformatted id'})
     } else if (error.name === 'ValidationError'){
         return res.status(400).send(error.message)
+    } else if (error.name === 'MongoServerError') {
+        return(res.status(400).send(error.message))
     }
     next(error)
 }

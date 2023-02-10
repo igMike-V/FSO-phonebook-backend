@@ -11,8 +11,17 @@ POST http://localhost:3001/api/persons
 Content-Type: application/json
 
 { 
-    "name": "Mi", 
-    "number": "905-333-3333"
+    "name": "Mike Vautour", 
+    "number": "905-3333333"
+}
+
+### UPDATE
+PUT http://localhost:3001/api/persons/63e67f16f37b6f01b91103af
+Content-Type: application/json
+
+{ 
+    "name": "Mike Via", 
+    "number": "999999999999"
 }
 
 ### Send missing name
